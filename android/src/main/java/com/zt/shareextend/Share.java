@@ -49,6 +49,7 @@ public class Share {
         String sharePanelTitle = call.argument("sharePanelTitle");
         String subject = call.argument("subject");
         ArrayList<String> extraTexts = call.argument("extraTexts");
+        String packageName = call.argument("packageName");
 
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("Non-empty list expected");
@@ -95,6 +96,9 @@ public class Share {
                 shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
                 shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uriList);
             }
+        }
+        if (packageName != null && !packageName.equals("")) {
+            shareIntent.setPackage(packageName);
         }
         startChooserActivity(shareIntent, sharePanelTitle, uriList);
     }

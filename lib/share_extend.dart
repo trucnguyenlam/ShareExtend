@@ -28,13 +28,16 @@ class ShareExtend {
       {Rect? sharePositionOrigin,
       String? sharePanelTitle,
       String subject = "",
-      List<String>? extraTexts}) {
+      List<String>? extraTexts,
+      String packageName = ""}) {
     assert(list.isNotEmpty);
     return _shareInner(list, type,
         sharePositionOrigin: sharePositionOrigin,
         subject: subject,
         sharePanelTitle: sharePanelTitle,
-        extraTexts: extraTexts);
+        extraTexts: extraTexts,
+        packageName: packageName,
+    );
   }
 
   /// method to share with system ui
@@ -51,7 +54,8 @@ class ShareExtend {
       {Rect? sharePositionOrigin,
       String? sharePanelTitle,
       String subject = "",
-      String extraText = ""}) {
+      String extraText = "",
+      String packageName = ""}) {
     assert(text.isNotEmpty);
     List<String> list = [text];
     return _shareInner(
@@ -61,6 +65,7 @@ class ShareExtend {
       sharePanelTitle: sharePanelTitle,
       subject: subject,
       extraTexts: [extraText],
+      packageName: packageName,
     );
   }
 
@@ -68,14 +73,16 @@ class ShareExtend {
       {Rect? sharePositionOrigin,
       String? sharePanelTitle,
       String? subject,
-      List<String>? extraTexts}) {
+      List<String>? extraTexts,
+      String? packageName}) {
     assert(list.isNotEmpty);
     final Map<String, dynamic> params = <String, dynamic>{
       'list': list,
       'type': type,
       'sharePanelTitle': sharePanelTitle,
       'subject': subject,
-      'extraTexts': extraTexts
+      'extraTexts': extraTexts,
+      'packageName': packageName,
     };
     if (sharePositionOrigin != null) {
       params['originX'] = sharePositionOrigin.left;
