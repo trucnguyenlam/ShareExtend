@@ -31,7 +31,7 @@ class ShareUtils {
                 }
             }
         } catch (Exception e) {
-
+            // do nothing
         }
     }
 

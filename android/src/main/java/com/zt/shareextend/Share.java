@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,7 +26,7 @@ public class Share {
 
     private static final int CODE_ASK_PERMISSION = 100;
 
-    private Context context;
+    private final Context context;
     private MethodCall call;
 
     public Share(Context context) {
@@ -50,6 +51,7 @@ public class Share {
         String subject = call.argument("subject");
         ArrayList<String> extraTexts = call.argument("extraTexts");
         String packageName = call.argument("packageName");
+        List<String> contentUris = call.argument("contentUris");
 
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("Non-empty list expected");
@@ -72,10 +74,21 @@ public class Share {
                     return;
                 }
             }
-            for (String path : list) {
-                File f = new File(path);
-                Uri uri = ShareUtils.getUriForFile(context, f);
-                uriList.add(uri);
+
+            // Android sdk 30+, need content uri instead
+            if (Build.VERSION.SDK_INT >= 30 && contentUris != null && !contentUris.isEmpty()) {
+                for (String contentUri : contentUris) {
+                    if (contentUri != null) {
+                        Uri uri = Uri.parse(contentUri);
+                        uriList.add(uri);
+                    }
+                }
+            } else {
+                for (String path : list) {
+                    File f = new File(path);
+                    Uri uri = ShareUtils.getUriForFile(context, f);
+                    uriList.add(uri);
+                }
             }
 
             if ("image".equals(type)) {
@@ -107,12 +120,10 @@ public class Share {
         Intent chooserIntent = Intent.createChooser(shareIntent, sharePanelTitle);
         ShareUtils.grantUriPermission(context, uriList, chooserIntent);
 
-        if (context instanceof Activity) {
-            context.startActivity(chooserIntent);
-        } else {
+        if (!(context instanceof Activity)) {
             chooserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(chooserIntent);
         }
+        context.startActivity(chooserIntent);
     }
 
     private boolean checkPermission() {

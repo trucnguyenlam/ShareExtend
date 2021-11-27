@@ -65,7 +65,7 @@ public class ShareExtendPlugin implements FlutterPlugin, ActivityAware, PluginRe
         tearDown();
     }
 
-    private void setUpChannel(Context context, BinaryMessenger messenger,Registrar registrar, ActivityPluginBinding activityBinding) {
+    private void setUpChannel(Context context, BinaryMessenger messenger, Registrar registrar, ActivityPluginBinding activityBinding) {
         methodChannel = new MethodChannel(messenger, CHANNEL);
         share = new Share(context);
         callHandler = new MethodCallHandlerImpl(share);

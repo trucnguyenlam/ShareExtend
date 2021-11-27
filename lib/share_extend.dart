@@ -3,16 +3,15 @@
 ///
 ///
 /// A open source authorized by zhouteng [https://github.com/zhouteng0217/ShareExtend](https://github.com/zhouteng0217/ShareExtend).
-
 import 'dart:async';
-import 'package:flutter/services.dart';
 import 'dart:ui';
+
+import 'package:flutter/services.dart';
 
 /// Plugin for summoning a platform share sheet.
 class ShareExtend {
   /// [MethodChannel] used to communicate with the platform side.
-  static const MethodChannel _channel =
-      const MethodChannel('com.zt.shareextend/share_extend');
+  static const MethodChannel _channel = const MethodChannel('com.zt.shareextend/share_extend');
 
   /// method to share with system ui
   ///  It uses the ACTION_SEND Intent on Android and UIActivityViewController
@@ -31,12 +30,14 @@ class ShareExtend {
       List<String>? extraTexts,
       String packageName = ""}) {
     assert(list.isNotEmpty);
-    return _shareInner(list, type,
-        sharePositionOrigin: sharePositionOrigin,
-        subject: subject,
-        sharePanelTitle: sharePanelTitle,
-        extraTexts: extraTexts,
-        packageName: packageName,
+    return _shareInner(
+      list,
+      type,
+      sharePositionOrigin: sharePositionOrigin,
+      subject: subject,
+      sharePanelTitle: sharePanelTitle,
+      extraTexts: extraTexts,
+      packageName: packageName,
     );
   }
 
@@ -55,7 +56,8 @@ class ShareExtend {
       String? sharePanelTitle,
       String subject = "",
       String extraText = "",
-      String packageName = ""}) {
+      String packageName = "",
+      String? contentUri = ""}) {
     assert(text.isNotEmpty);
     List<String> list = [text];
     return _shareInner(
@@ -66,6 +68,7 @@ class ShareExtend {
       subject: subject,
       extraTexts: [extraText],
       packageName: packageName,
+      contentUris: (contentUri != null && contentUri.isNotEmpty) ? [contentUri] : null,
     );
   }
 
@@ -74,7 +77,8 @@ class ShareExtend {
       String? sharePanelTitle,
       String? subject,
       List<String>? extraTexts,
-      String? packageName}) {
+      String? packageName,
+      List<String>? contentUris}) {
     assert(list.isNotEmpty);
     final Map<String, dynamic> params = <String, dynamic>{
       'list': list,
@@ -83,6 +87,7 @@ class ShareExtend {
       'subject': subject,
       'extraTexts': extraTexts,
       'packageName': packageName,
+      'contentUris': contentUris,
     };
     if (sharePositionOrigin != null) {
       params['originX'] = sharePositionOrigin.left;
