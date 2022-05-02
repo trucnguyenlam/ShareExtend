@@ -52,6 +52,7 @@ public class Share {
         ArrayList<String> extraTexts = call.argument("extraTexts");
         String packageName = call.argument("packageName");
         List<String> contentUris = call.argument("contentUris");
+        String usbMassStorage = call.argument("usbMassStorage");
 
         if (list == null || list.isEmpty()) {
             throw new IllegalArgumentException("Non-empty list expected");

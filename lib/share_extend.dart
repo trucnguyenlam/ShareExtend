@@ -57,7 +57,8 @@ class ShareExtend {
       String subject = "",
       String extraText = "",
       String packageName = "",
-      String? contentUri = ""}) {
+      String? contentUri = "",
+      bool usbMassStorage = false}) {
     assert(text.isNotEmpty);
     List<String> list = [text];
     return _shareInner(
@@ -69,6 +70,7 @@ class ShareExtend {
       extraTexts: [extraText],
       packageName: packageName,
       contentUris: (contentUri != null && contentUri.isNotEmpty) ? [contentUri] : null,
+      usbMassStorage: usbMassStorage,
     );
   }
 
@@ -78,7 +80,8 @@ class ShareExtend {
       String? subject,
       List<String>? extraTexts,
       String? packageName,
-      List<String>? contentUris}) {
+      List<String>? contentUris,
+      bool usbMassStorage = false}) {
     assert(list.isNotEmpty);
     final Map<String, dynamic> params = <String, dynamic>{
       'list': list,
@@ -88,6 +91,7 @@ class ShareExtend {
       'extraTexts': extraTexts,
       'packageName': packageName,
       'contentUris': contentUris,
+      'usbMassStorage': usbMassStorage? 'true': 'false',
     };
     if (sharePositionOrigin != null) {
       params['originX'] = sharePositionOrigin.left;
