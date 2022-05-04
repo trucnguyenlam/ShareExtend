@@ -77,7 +77,7 @@ public class Share {
             }
 
             // Android sdk 30+, need content uri instead
-            if (Build.VERSION.SDK_INT >= 30 && contentUris != null && !contentUris.isEmpty()) {
+            if ((Build.VERSION.SDK_INT >= 30 || "true".equals(usbMassStorage)) && contentUris != null && !contentUris.isEmpty()) {
                 for (String contentUri : contentUris) {
                     if (contentUri != null) {
                         Uri uri = Uri.parse(contentUri);
