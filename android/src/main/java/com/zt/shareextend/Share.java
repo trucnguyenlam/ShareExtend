@@ -136,6 +136,19 @@ public class Share {
         if (!(context instanceof Activity)) {
             return;
         }
-        ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_ASK_PERMISSION);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, CODE_ASK_PERMISSION);
+        } else {
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[]{
+                            Manifest.permission.READ_MEDIA_IMAGES,
+                            Manifest.permission.READ_MEDIA_AUDIO,
+                            Manifest.permission.READ_MEDIA_VIDEO
+                    }, CODE_ASK_PERMISSION);
+        }
     }
 }
