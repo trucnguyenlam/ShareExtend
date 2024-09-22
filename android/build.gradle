@@ -22,6 +22,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+    namespace "com.zt.shareextend"
+
     compileSdkVersion 33
 
     defaultConfig {
