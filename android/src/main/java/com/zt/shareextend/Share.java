@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -143,12 +144,14 @@ public class Share {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     }, CODE_ASK_PERMISSION);
         } else {
-            ActivityCompat.requestPermissions((Activity) context,
-                    new String[]{
-                            Manifest.permission.READ_MEDIA_IMAGES,
-                            Manifest.permission.READ_MEDIA_AUDIO,
-                            Manifest.permission.READ_MEDIA_VIDEO
-                    }, CODE_ASK_PERMISSION);
+            Log.d("ShareExtend", "On Android 13: assuming persisted permissions");
+            // Android 13 Tiramisu, assuming the permissions are persisted already
+//            ActivityCompat.requestPermissions((Activity) context,
+//                    new String[]{
+//                            Manifest.permission.READ_MEDIA_IMAGES,
+//                            Manifest.permission.READ_MEDIA_AUDIO,
+//                            Manifest.permission.READ_MEDIA_VIDEO
+//                    }, CODE_ASK_PERMISSION);
         }
     }
 }
